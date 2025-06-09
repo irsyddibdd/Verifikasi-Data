@@ -11,6 +11,7 @@ let currentFilter = 'All';
 let currentSearchTerm = '';
 let currentSortOrder = 'newest-first';
 let searchTimeout;
+let isModalOpen = false; // Flag untuk melacak status modal
 
 // --- Referensi Elemen HTML ---
 const tableBody = document.getElementById('table-body');
@@ -40,23 +41,48 @@ const sortSelect = document.getElementById('sort-select');
 
 // --- FUNGSI-FUNGSI UTAMA ---
 
-async function fetchData() {
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
-    if (tableBody) tableBody.innerHTML = '';
+async function fetchData(isBackgroundUpdate = false) {
+    // Jangan lakukan update jika ada modal yang terbuka
+    if (isModalOpen) {
+        console.log("Pembaruan data ditunda karena modal terbuka.");
+        return;
+    }
+
+    if (!isBackgroundUpdate) {
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+        if (tableBody) tableBody.innerHTML = '';
+    }
+
     try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error(`Network response was not ok`);
         const data = await response.json();
-        allData = data;
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
-        filterAndRenderData();
+
+        // Cek apakah data benar-benar berubah sebelum me-render ulang
+        if (JSON.stringify(allData) !== JSON.stringify(data)) {
+            console.log("Data baru terdeteksi, memperbarui tampilan...");
+            allData = data;
+            filterAndRenderData();
+        } else {
+            console.log("Tidak ada perubahan data.");
+        }
+
+        if (loadingIndicator && loadingIndicator.style.display === 'block') {
+            loadingIndicator.style.display = 'none';
+        }
     } catch (error) {
-        if (loadingIndicator) loadingIndicator.innerHTML = 'Gagal memuat data.';
+        if (loadingIndicator && !isBackgroundUpdate) {
+            loadingIndicator.innerHTML = 'Gagal memuat data.';
+        }
         console.error('Terjadi error saat fetchData:', error);
     }
 }
 
+
 function filterAndRenderData() {
+    // Simpan posisi scroll saat ini
+    const scrollPosition = window.scrollY;
+
     let processedData = [...allData];
 
     if (currentFilter !== 'All') {
@@ -81,6 +107,9 @@ function filterAndRenderData() {
     });
 
     renderTable(processedData);
+    
+    // Kembalikan posisi scroll
+    window.scrollTo(0, scrollPosition);
 }
 
 function renderTable(dataToRender) {
@@ -175,7 +204,8 @@ function showConfirmationModal(title, message) {
             ? Promise.resolve() 
             : Promise.reject();
     }
-
+    
+    isModalOpen = true; // Set flag saat modal muncul
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
     const confirmBtn = document.getElementById('modalConfirmBtn');
@@ -186,13 +216,18 @@ function showConfirmationModal(title, message) {
     modal.classList.add('visible');
     
     return new Promise((resolve, reject) => {
-        const onConfirm = () => {
+        const cleanup = () => {
             modal.classList.remove('visible');
+            isModalOpen = false; // Unset flag saat modal tertutup
+        };
+        
+        const onConfirm = () => {
+            cleanup();
             resolve(true);
         };
         
         const onCancel = () => {
-            modal.classList.remove('visible');
+            cleanup();
             reject(false);
         };
         
@@ -335,12 +370,16 @@ function addFounderToList(name, listElement) {
     listElement.appendChild(li);
 }
 
-addNewBtn.addEventListener('click', () => addDataModal.classList.add('visible'));
+addNewBtn.addEventListener('click', () => {
+    addDataModal.classList.add('visible');
+    isModalOpen = true;
+});
 
 addModalCancelBtn.addEventListener('click', () => {
     addDataModal.classList.remove('visible');
     addDataForm.reset();
     founderList.innerHTML = '';
+    isModalOpen = false;
 });
 
 addFounderBtn.addEventListener('click', () => {
@@ -394,10 +433,13 @@ addDataForm.addEventListener('submit', async (event) => {
         if (result.status !== 'success') throw new Error(result.message);
         
         addDataModal.classList.remove('visible');
+        isModalOpen = false;
         addDataForm.reset();
         founderList.innerHTML = '';
-        allData.unshift(result.newRowData);
-        filterAndRenderData();
+        
+        // Memanggil fetchData() agar semua klien (termasuk yang ini) sinkron
+        await fetchData();
+
     } catch (error) {
         alert('Gagal menambahkan data: ' + error.message);
     } finally {
@@ -429,7 +471,10 @@ function openEditModal(perusahaan) {
         }
     });
     
-    if(editDataModal) editDataModal.classList.add('visible');
+    if(editDataModal) {
+        editDataModal.classList.add('visible');
+        isModalOpen = true;
+    }
 }
 
 editAddFounderBtn.addEventListener('click', () => {
@@ -448,7 +493,10 @@ editFounderNameInput.addEventListener('keydown', (e) => {
     }
 });
 
-editModalCancelBtn.addEventListener('click', () => editDataModal.classList.remove('visible'));
+editModalCancelBtn.addEventListener('click', () => {
+    editDataModal.classList.remove('visible');
+    isModalOpen = false;
+});
 
 editDataForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -486,6 +534,7 @@ editDataForm.addEventListener('submit', async (event) => {
         if (result.status !== 'success') throw new Error(result.message);
         
         editDataModal.classList.remove('visible');
+        isModalOpen = false;
         await fetchData(); // Fetch ulang data untuk sinkronisasi penuh
     } catch (error) {
         alert('Gagal menyimpan perubahan: ' + error.message);
@@ -522,7 +571,7 @@ sortSelect.addEventListener('change', (e) => {
     filterAndRenderData(); 
 });
 
-// Jalankan pengambilan data utama
+// Jalankan pengambilan data utama saat pertama kali load
 fetchData();
 
 
@@ -532,11 +581,20 @@ fetchData();
 window.addEventListener('load', () => {
     const startupAnimation = document.getElementById('startup-animation');
     
-    // Durasi total animasi di CSS adalah sekitar 2 detik.
-    // Kita beri jeda lebih lama sebelum menghilangkannya agar animasi selesai.
     setTimeout(() => {
         if (startupAnimation) {
             startupAnimation.classList.add('hidden');
         }
-    }, 2500); // Tunggu 2.5 detik
+    }, 2500);
 });
+
+
+// ==========================================================
+// IMPLEMENTASI SINKRONISASI OTOMATIS (POLLING)
+// ==========================================================
+const POLLING_INTERVAL = 10000; // 10 detik, sesuaikan jika perlu
+
+setInterval(() => {
+    console.log("Memeriksa pembaruan data dari server...");
+    fetchData(true); // `true` menandakan ini adalah update di latar belakang
+}, POLLING_INTERVAL);
