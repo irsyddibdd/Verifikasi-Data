@@ -390,29 +390,161 @@ body {
     gap: 1rem;
 }
 
-.checklist-details .checklist-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-size: 0.95rem;
+/* ========================================================== */
+/* KONSEP FINAL: AURA BERCAHAYA & IKON ANIMATIF           */
+/* ========================================================== */
+
+/* 1. Sembunyikan checkbox asli secara visual tapi tetap fungsional */
+.checklist-details .checklist-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+    /* Pastikan di atas elemen lain untuk bisa diklik */
 }
 
-.checklist-details .checklist-item input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--accent-green);
-    cursor: pointer;
-    border-radius: 4px;
-    flex-shrink: 0;
+/* 2. Atur posisi dasar untuk <li> dan label */
+.checklist-details .checklist-item {
+    position: relative;
+    /* Penting untuk posisi absolut anak */
+    padding: 0.75rem 0.75rem 0.75rem 3rem;
+    /* Beri ruang kiri untuk ikon kustom */
+    border-radius: var(--border-radius-md);
+    transition: background-color 0.4s ease;
 }
 
 .checklist-details .checklist-item label {
-    transition: color 0.2s ease;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: color 0.4s ease, opacity 0.4s ease;
 }
 
-.checklist-details .checklist-item input:checked+label {
-    text-decoration: line-through;
+/* 3. Buat LINGKARAN sebagai 'wadah' ikon */
+.checklist-details .checklist-item::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    background-color: transparent;
+    border: 2px solid #cbd5e1;
+    /* Warna border abu-abu */
+    border-radius: 50%;
+    /* Membuatnya menjadi lingkaran */
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 4. Buat TANDA CENTANG (disembunyikan pada awalnya) */
+.checklist-details .checklist-item::after {
+    content: '';
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    width: 6px;
+    height: 12px;
+    border: solid var(--bg-surface);
+    /* Warna centang putih */
+    border-width: 0 3px 3px 0;
+
+    /* Sembunyikan dan posisikan untuk animasi */
+    opacity: 0;
+    transform: translateY(-60%) rotate(45deg) scale(0.3);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+
+/* ========================================================== */
+/* === EFEK DAN ANIMASI SAAT CHECKBOX DICENTANG (checked) === */
+/* ========================================================== */
+
+/* A. Latar belakang <li> sedikit berubah untuk memberi kesan 'terangkat' */
+.checklist-details .checklist-item:has(input:checked) {
+    background-color: var(--bg-main);
+}
+
+/* B. Animasi LINGKARAN: menjadi hijau dan memancarkan cahaya */
+.checklist-details .checklist-item:has(input:checked)::before {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+    /* INILAH EFEK AURA / GLOW YANG MEMBEDAKAN */
+    box-shadow: 0 0 12px 2px var(--accent-green-bg), 0 0 20px 5px #f0fdf499;
+}
+
+/* C. Animasi TANDA CENTANG: muncul dengan efek 'pop' */
+.checklist-details .checklist-item:has(input:checked)::after {
+    opacity: 1;
+    transform: translateY(-60%) rotate(45deg) scale(1);
+}
+
+/* D. Animasi TEKS LABEL: memudar dengan elegan */
+.checklist-details .checklist-item:has(input:checked) label {
     color: var(--text-secondary);
+    opacity: 0.7;
+    /* Opsional: tambahkan coretan jika suka */
+    /* text-decoration: line-through; */
+}
+
+/* VERSI C: CORETAN DUA WARNA (TWO-TONE SCRIBBLE) */
+
+.checklist-details .checklist-item:has(input:checked) label {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.4s ease;
+}
+
+/* Lapisan pertama: warna hijau utama */
+.checklist-details .checklist-item:has(input:checked) label::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%2322C55E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    animation: drawLine 0.5s 0.1s ease-out forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+/* Lapisan kedua: warna biru dari palet tema */
+.checklist-details .checklist-item:has(input:checked) label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    /* Muncul sedikit lebih lambat dan bergeser */
+    animation: drawLine 0.6s 0.2s ease-out forwards;
+    transform: scaleX(0) rotate(-1deg);
+    /* Sedikit diputar */
+    transform-origin: left;
+    opacity: 0.7;
+}
+
+
+@keyframes drawLine {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
 }
 
 /* ========================================================== */
