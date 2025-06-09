@@ -212,32 +212,37 @@ function createMainRow(perusahaan) {
     const row = document.createElement('div');
     row.className = 'table-row';
     row.id = `row-${perusahaan.id}`;
+    
+    // === PERUBAHAN DIMULAI DI SINI: Menambahkan atribut data-label ===
     row.innerHTML = `
         <div class="col project-name">${perusahaan.nama_perusahaan}</div>
-        <div class="col">
+        <div class="col" data-label="Tipe">
             <span class="pill-base type-pill ${perusahaan.jenis_verifikasi}">${perusahaan.jenis_verifikasi}</span>
         </div>
-        <div class="col">
+        <div class="col" data-label="Status">
             <span id="status-${perusahaan.id}" class="pill-base status-pill ${perusahaan.status_global}">${perusahaan.status_global}</span>
         </div>
-        <div class="col action-buttons">
-            <button title="Edit" class="action-btn edit-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
-                    <path d="m15 5 4 4"/>
-                </svg>
-            </button>
-            <button title="Hapus" class="action-btn delete-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 6h18"/>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
-                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                    <line x1="10" x2="10" y1="11" y2="17"/>
-                    <line x1="14" x2="14" y1="11" y2="17"/>
-                </svg>
-            </button>
+        <div class="col" data-label="Aksi">
+            <div class="action-buttons">
+                <button title="Edit" class="action-btn edit-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                        <path d="m15 5 4 4"/>
+                    </svg>
+                </button>
+                <button title="Hapus" class="action-btn delete-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        <line x1="10" x2="10" y1="11" y2="17"/>
+                        <line x1="14" x2="14" y1="11" y2="17"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     `;
+    // === PERUBAHAN SELESAI DI SINI ===
     
     row.addEventListener('click', (event) => { 
         if (event.target.closest('.action-btn')) return; 
@@ -264,13 +269,10 @@ function createMainRow(perusahaan) {
     return row;
 }
 
-// === PERUBAHAN DIMULAI DI SINI ===
 function createDetailRow(perusahaan) {
     const detail = document.createElement('div');
     detail.className = 'checklist-details';
     
-    // 1. Buat bagian Catatan
-    // Cek jika ada catatan dan catatan tidak kosong
     const hasNote = perusahaan.catatan && perusahaan.catatan.trim() !== '';
     const notesHTML = hasNote ? `
         <div class="notes-section">
@@ -279,7 +281,6 @@ function createDetailRow(perusahaan) {
         </div>
     ` : '';
 
-    // 2. Buat bagian Checklist
     const checklistItemsHTML = perusahaan.checklist.map(item => {
         const uniqueId = `${perusahaan.id}-${item.tugas.replace(/\s/g, '-')}`;
         return `
@@ -293,7 +294,6 @@ function createDetailRow(perusahaan) {
         `;
     }).join('');
     
-    // 3. Gabungkan semuanya
     detail.innerHTML = `
         ${notesHTML}
         <div class="checklist-section">
@@ -304,7 +304,6 @@ function createDetailRow(perusahaan) {
     
     return detail;
 }
-// === PERUBAHAN SELESAI DI SINI ===
 
 function attachCheckboxListeners() {
     document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
@@ -392,13 +391,8 @@ addDataForm.addEventListener('submit', async (event) => {
     const nama = document.getElementById('namaPerusahaan').value;
     const jenis = document.getElementById('jenisVerifikasi').value;
     const tugasString = subTasks.join('\n');
-    // === PERUBAHAN DIMULAI DI SINI ===
     const catatan = document.getElementById('catatan').value;
-    // === PERUBAHAN SELESAI DI SINI ===
-
-    // === PERUBAHAN DIMULAI DI SINI ===
     const addUrl = `${API_URL}?action=addData&nama=${encodeURIComponent(nama)}&jenis=${encodeURIComponent(jenis)}&subTugas=${encodeURIComponent(tugasString)}&catatan=${encodeURIComponent(catatan)}`;
-    // === PERUBAHAN SELESAI DI SINI ===
     
     try {
         const response = await fetch(addUrl);
@@ -423,9 +417,7 @@ function openEditModal(perusahaan) {
     document.getElementById('editCompanyId').value = perusahaan.id;
     document.getElementById('editNamaPerusahaan').value = perusahaan.nama_perusahaan;
     document.getElementById('editJenisVerifikasi').value = perusahaan.jenis_verifikasi;
-    // === PERUBAHAN DIMULAI DI SINI ===
-    document.getElementById('editCatatan').value = perusahaan.catatan || ''; // Menampilkan catatan yang ada
-    // === PERUBAHAN SELESAI DI SINI ===
+    document.getElementById('editCatatan').value = perusahaan.catatan || ''; 
 
     const editCheckboxes = document.querySelectorAll('#editTaskCheckboxGroup input');
     editCheckboxes.forEach(cb => cb.checked = false);
@@ -491,13 +483,8 @@ editDataForm.addEventListener('submit', async (event) => {
     const nama = document.getElementById('editNamaPerusahaan').value;
     const jenis = document.getElementById('editJenisVerifikasi').value;
     const tugasString = subTasks.join('\n');
-    // === PERUBAHAN DIMULAI DI SINI ===
     const catatan = document.getElementById('editCatatan').value;
-    // === PERUBAHAN SELESAI DI SINI ===
-
-    // === PERUBAHAN DIMULAI DI SINI ===
     const editUrl = `${API_URL}?action=editData&id=${id}&nama=${encodeURIComponent(nama)}&jenis=${encodeURIComponent(jenis)}&subTugas=${encodeURIComponent(tugasString)}&catatan=${encodeURIComponent(catatan)}`;
-    // === PERUBAHAN SELESAI DI SINI ===
     
     try {
         const response = await fetch(editUrl);
@@ -529,7 +516,7 @@ filterPills.forEach(pill => {
         e.currentTarget.classList.add('active');
         
         currentFilter = e.currentTarget.textContent.trim();
-        if (currentFilter === 'Semua') { // Penyesuaian dari 'All' ke 'Semua' jika diperlukan
+        if (currentFilter === 'Semua') {
             currentFilter = 'All'; 
         }
         
@@ -537,10 +524,9 @@ filterPills.forEach(pill => {
     });
 });
 
-// Event Listener untuk Dropdown Urutan
 sortSelect.addEventListener('change', (e) => {
     currentSortOrder = e.target.value;
-    filterAndRenderData(); // Panggil ulang fungsi render setelah urutan diubah
+    filterAndRenderData(); 
 });
 
 fetchData();
