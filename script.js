@@ -9,6 +9,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbznLpe9CLQHofvMoDwka3kX
 let allData = [];
 let currentFilter = 'All';
 let currentSearchTerm = '';
+let currentSortOrder = 'newest-first';
 let searchTimeout;
 
 // --- Referensi Elemen HTML ---
@@ -35,6 +36,7 @@ const editFounderList = document.getElementById('editFounderList');
 // Filter & Pencarian
 const searchInput = document.querySelector('.search-bar input');
 const filterPills = document.querySelectorAll('.filter-pills .pill');
+const sortSelect = document.getElementById('sort-select'); 
 
 // --- FUNGSI-FUNGSI UTAMA ---
 
@@ -55,16 +57,35 @@ async function fetchData() {
 }
 
 function filterAndRenderData() {
-    let filteredData = [...allData];
+    let processedData = [...allData];
+
+    // 1. Langkah Filtering (tidak ada perubahan)
     if (currentFilter !== 'All') {
-        filteredData = filteredData.filter(p => p.jenis_verifikasi === currentFilter);
+        processedData = processedData.filter(p => p.jenis_verifikasi === currentFilter);
     }
+
+    // 2. Langkah Pencarian (tidak ada perubahan)
     if (currentSearchTerm) {
-        filteredData = filteredData.filter(p =>
+        processedData = processedData.filter(p =>
             p.nama_perusahaan.toLowerCase().includes(currentSearchTerm.toLowerCase())
         );
     }
-    renderTable(filteredData);
+
+    // 3. LANGKAH BARU: Pengurutan (Sorting)
+    processedData.sort((a, b) => {
+        // Ekstrak timestamp dari ID (misal: "P-1717908264000" -> 1717908264000)
+        const timeA = parseInt(a.id.split('-')[1]);
+        const timeB = parseInt(b.id.split('-')[1]);
+
+        if (currentSortOrder === 'oldest-first') {
+            return timeA - timeB; // Urutan menaik (Lama ke Baru)
+        } else {
+            return timeB - timeA; // Urutan menurun (Terbaru ke Lama)
+        }
+    });
+
+    // 4. Render data yang sudah diproses
+    renderTable(processedData);
 }
 
 function renderTable(dataToRender) {
@@ -514,6 +535,12 @@ filterPills.forEach(pill => {
         
         filterAndRenderData();
     });
+});
+
+// Event Listener untuk Dropdown Urutan
+sortSelect.addEventListener('change', (e) => {
+    currentSortOrder = e.target.value;
+    filterAndRenderData(); // Panggil ulang fungsi render setelah urutan diubah
 });
 
 fetchData();

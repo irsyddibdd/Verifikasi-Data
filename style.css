@@ -686,3 +686,108 @@ body {
 .founder-list .remove-founder-btn:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+/* ========================================================== */
+/* DESAIN ULANG KONTROL FILTER & URUTAN (MODERN & KOHESIF) */
+/* ========================================================== */
+
+/* (Opsional) Beri sedikit ruang di bawah seluruh baris kontrol */
+.card-controls {
+    padding-bottom: 1rem;
+}
+
+/* Wadah utama untuk semua tombol di sebelah kanan */
+.filter-sort-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-main);
+    /* Latar belakang abu-abu lembut */
+    padding: 0.3rem;
+    /* Padding di dalam wadah */
+    border-radius: var(--border-radius-md);
+    /* Radius yang lebih besar dan modern */
+    gap: 0.5rem;
+}
+
+/* Menghilangkan gaya default dari filter pills sebelumnya */
+.filter-pills {
+    display: flex;
+    padding: 0;
+    gap: 0.5rem;
+    background-color: transparent;
+}
+
+/* Gaya dasar untuk semua tombol (pills dan dropdown) */
+.filter-pills .pill,
+.sort-control .sort-dropdown {
+    /* Menghilangkan tampilan default browser */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Tampilan & Ukuran */
+    padding: 0.6rem 1.1rem;
+    border: none;
+    /* Hilangkan border */
+    border-radius: var(--border-radius-sm);
+    /* Radius yang seragam */
+    background-color: transparent;
+    /* Transparan secara default */
+
+    /* Teks & Font */
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+
+    /* Interaksi */
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* Efek saat tombol di-hover */
+.filter-pills .pill:hover,
+.sort-control .sort-dropdown:hover {
+    color: var(--text-primary);
+    background-color: #eef2f7;
+    /* Warna hover yang sangat lembut */
+}
+
+/* Gaya untuk tombol filter yang sedang AKTIF */
+.filter-pills .pill.active {
+    background-color: var(--bg-surface);
+    /* Warna putih */
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    font-weight: 700;
+}
+
+/* Penyesuaian khusus untuk dropdown agar ada ikon panah */
+.sort-control {
+    position: relative;
+}
+
+.sort-control .sort-dropdown {
+    padding-right: 2.5rem;
+    /* Beri ruang untuk ikon panah */
+}
+
+.sort-control::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0.85rem;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+/* Efek focus untuk aksesibilitas, tanpa outline default */
+.sort-control .sort-dropdown:focus {
+    outline: none;
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-sm);
+}

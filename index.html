@@ -28,10 +28,20 @@
                     <div class="search-bar">
                         <input type="text" placeholder="Cari berdasarkan nama perusahaan...">
                     </div>
-                    <div class="filter-pills">
-                        <button class="pill active">All</button>
-                        <button class="pill">Perubahan</button>
-                        <button class="pill">Pendirian</button>
+                
+                    <div class="filter-sort-wrapper">
+                        <div class="filter-pills">
+                            <button class="pill active">All</button>
+                            <button class="pill">Perubahan</button>
+                            <button class="pill">Pendirian</button>
+                        </div>
+                
+                        <div class="sort-control">
+                            <select id="sort-select" class="sort-dropdown">
+                                <option value="newest-first" selected>Urutkan: Terbaru ke Lama</option>
+                                <option value="oldest-first">Urutkan: Lama ke Baru</option>
+                            </select>
+                        </div>          
                     </div>
                 </div>
 
