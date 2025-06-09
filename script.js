@@ -529,4 +529,15 @@ sortSelect.addEventListener('change', (e) => {
     filterAndRenderData(); 
 });
 
+// ===== KODE UNTUK MENGHILANGKAN ANIMASI PEMBUKA =====
+window.addEventListener('load', () => {
+    const startupAnimation = document.getElementById('startup-animation');
+    // Beri sedikit jeda agar animasi terlihat
+    setTimeout(() => {
+        if (startupAnimation) {
+            startupAnimation.classList.add('hidden');
+        }
+    }, 1500); // Tunggu 1.5 detik sebelum menghilang
+});
+
 fetchData();

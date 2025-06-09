@@ -962,3 +962,96 @@ body {
         transform: scaleX(1);
     }
 }
+
+/* ========================================================== */
+/* ANIMASI PEMBUKA (STARTUP ANIMATION)                      */
+/* ========================================================== */
+#startup-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-main); /* Sama dengan splash screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+#startup-animation.hidden {
+    opacity: 0;
+    visibility: hidden; /* Sembunyikan setelah transisi selesai */
+}
+
+#startup-animation svg {
+    width: 100px; /* Ukuran logo */
+    height: 100px;
+    color: var(--accent-indigo);
+    animation: startup-pulse 1.5s ease-in-out forwards;
+}
+
+@keyframes startup-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ========================================================== */
+/* ANIMASI PEMBUKA (STARTUP ANIMATION)                      */
+/* ========================================================== */
+#startup-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-main);
+    /* Sama dengan splash screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+#startup-animation.hidden {
+    opacity: 0;
+    visibility: hidden;
+    /* Sembunyikan setelah transisi selesai */
+}
+
+#startup-animation svg {
+    width: 100px;
+    /* Ukuran logo */
+    height: 100px;
+    color: var(--accent-indigo);
+    animation: startup-pulse 1.5s ease-in-out forwards;
+}
+
+@keyframes startup-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
