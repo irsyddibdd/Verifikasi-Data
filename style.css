@@ -1,35 +1,41 @@
-/* Import Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Import Font Baru yang Lebih Modern */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ========================================================== */
-/* PALET WARNA & VARIABEL DESAIN MODERN                     */
+/* PALET WARNA & VARIABEL DESAIN BARU                       */
 /* ========================================================== */
 :root {
-    /* Warna Dasar */
-    --bg-main: #f7f9fc;
+    /* Warna Dasar & Netral yang Ditingkatkan */
+    --bg-main: #f8f9fe;
+    /* Sedikit lebih kebiruan */
     --bg-surface: #ffffff;
-    --border-color: #eef2f7;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-tertiary: #94a3b8;
+    --border-color: #e5e7eb;
+    /* Abu-abu yang lebih lembut */
+    --text-primary: #111827;
+    /* Hitam yang lebih pekat */
+    --text-secondary: #6b7280;
+    --text-tertiary: #9ca3af;
 
-    /* Warna Aksen */
-    --accent-blue: #3b82f6;
-    --accent-blue-bg: #eff6ff;
-    --accent-red: #ef4444;
-    --accent-green: #22c55e;
-    --accent-green-bg: #f0fdf4;
-    --accent-yellow: #f59e0b;
-    --accent-yellow-bg: #fffbeb;
-    --accent-indigo: #6366f1;
+    /* Warna Aksen Baru (Fokus pada Indigo) */
+    --accent-indigo: #4f46e5;
+    --accent-indigo-dark: #4338ca;
     --accent-indigo-bg: #eef2ff;
+    --accent-red: #ef4444;
+    --accent-red-bg: #fee2e2;
+    --accent-green: #10b981;
+    --accent-green-bg: #d1fae5;
+    --accent-amber: #f59e0b;
+    /* Mengganti yellow ke amber */
+    --accent-amber-bg: #fffbeb;
 
-    /* Properti Desain */
-    --border-radius-sm: 6px;
+    /* Properti Desain yang Disempurnakan */
+    --border-radius-sm: 8px;
     --border-radius-md: 12px;
     --border-radius-lg: 16px;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -41,7 +47,8 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    /* Menggunakan Font Baru */
+    font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
@@ -53,6 +60,10 @@ body {
 /* ========================================================== */
 .dashboard-container {
     padding: 2rem 3rem;
+    max-width: 1800px;
+    /* Batasi lebar maksimum */
+    margin: 0 auto;
+    /* Pusatkan container */
 }
 
 .dashboard-header {
@@ -62,17 +73,30 @@ body {
     margin-bottom: 2.5rem;
 }
 
-.header-title h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
+.header-title {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+    /* Jarak antara logo dan teks */
+}
+
+.header-logo {
+    width: 36px;
+    height: 36px;
+    color: var(--accent-indigo);
+}
+
+.header-title h1 {
+    font-size: 1.875rem;
+    /* 30px */
+    font-weight: 800;
+    /* Lebih tebal */
+    line-height: 1.2;
+    font-variant-ligatures: none;
 }
 
 .header-title p {
-    margin-top: 0.25rem;
+    margin-top: 0.1rem;
     font-size: 1rem;
     color: var(--text-secondary);
 }
@@ -84,8 +108,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.65rem 1.25rem;
-    border: none;
+    padding: 0.75rem 1.25rem;
+    /* Sedikit lebih besar */
+    border: 1px solid transparent;
     border-radius: var(--border-radius-sm);
     font-weight: 600;
     font-size: 0.9rem;
@@ -98,25 +123,32 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .btn-primary {
-    background-color: var(--accent-blue);
+    background-color: var(--accent-indigo);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #2563eb;
+    background-color: var(--accent-indigo-dark);
 }
 
 .btn-secondary {
     background-color: var(--bg-surface);
-    color: var(--text-secondary);
+    color: var(--text-primary);
     border: 1px solid var(--border-color);
 }
 
 .btn-secondary:hover {
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    border-color: #d1d9e4;
+    border-color: #d1d5db;
+    /* Sedikit lebih gelap */
+    background-color: #f9fafb;
 }
 
 /* ========================================================== */
@@ -127,35 +159,37 @@ body {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-sm);
+    transition: var(--transition-slow);
+}
+
+.data-card:hover {
+    box-shadow: var(--shadow-lg);
 }
 
 .card-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
+    padding: 1.25rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
     flex-wrap: wrap;
-    /* Izinkan wrapping */
     gap: 1rem;
-    /* Beri jarak jika wrapping terjadi */
 }
 
 .search-bar {
     flex-grow: 1;
-    /* Biarkan search bar tumbuh */
+    min-width: 250px;
 }
 
 .search-bar input {
     width: 100%;
-    /* Ubah dari fixed width ke 100% */
     max-width: 400px;
-    /* Batasi lebar maksimum di desktop */
     padding: 0.75rem 1rem 0.75rem 2.75rem;
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--border-color);
     font-size: 0.9rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: 0.85rem center;
     transition: var(--transition-fast);
@@ -163,22 +197,30 @@ body {
 
 .search-bar input:focus {
     outline: none;
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px var(--accent-blue-bg);
+    border-color: var(--accent-indigo);
+    box-shadow: 0 0 0 3px var(--accent-indigo-bg);
+}
+
+.filter-sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .filter-pills {
     display: flex;
     gap: 0.5rem;
     background-color: var(--bg-main);
-    padding: 0.25rem;
+    padding: 0.35rem;
     border-radius: var(--border-radius-sm);
 }
 
 .filter-pills .pill {
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: var(--border-radius-sm);
+    border-radius: 6px;
+    /* Sedikit lebih tajam */
     background-color: transparent;
     color: var(--text-secondary);
     font-weight: 600;
@@ -192,15 +234,49 @@ body {
 
 .filter-pills .pill.active {
     background-color: var(--bg-surface);
-    color: var(--text-primary);
+    color: var(--accent-indigo);
     box-shadow: var(--shadow-sm);
 }
+
+/* --- Pengurutan (Sort) --- */
+.sort-control {
+    position: relative;
+}
+
+.sort-control select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+}
+
+.sort-control::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0.85rem;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
 
 /* ========================================================== */
 /* TABEL DATA                                               */
 /* ========================================================== */
 .data-table {
-    padding: 0.5rem 0;
+    padding: 0;
+    /* Padding diatur di baris */
 }
 
 #loading,
@@ -208,13 +284,14 @@ body {
     text-align: center;
     padding: 4rem;
     color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .table-header,
 .table-row {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 100px;
-    /* Sedikit penyesuaian untuk kolom aksi */
+    grid-template-columns: 3fr 1fr 1.2fr 100px;
+    /* Lebar status disesuaikan */
     gap: 1.5rem;
     align-items: center;
     padding: 0 1.5rem;
@@ -239,11 +316,13 @@ body {
 }
 
 .table-row:hover {
-    background-color: var(--bg-main);
+    background-color: var(--accent-indigo-bg);
+    transform: scale(1.01);
+    /* Efek angkat halus */
 }
 
 .table-row.expanded {
-    background-color: var(--accent-blue-bg);
+    background-color: var(--accent-indigo-bg);
 }
 
 .table-row .col.project-name {
@@ -252,7 +331,7 @@ body {
 }
 
 .pill-base {
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     border-radius: 99px;
     font-size: 0.8rem;
     font-weight: 600;
@@ -262,28 +341,35 @@ body {
 }
 
 .type-pill.Perubahan {
-    background-color: var(--accent-indigo-bg);
-    color: var(--accent-indigo);
+    background-color: #e0e7ff;
+    /* BG Indigo lebih muda */
+    color: #3730a3;
+    /* Teks Indigo lebih tua */
 }
 
 .type-pill.Pendirian,
 .type-pill.Lainnya {
-    background-color: var(--accent-yellow-bg);
-    color: var(--accent-yellow);
+    background-color: var(--accent-amber-bg);
+    color: #b45309;
+    /* Teks Amber lebih tua */
 }
 
 .status-pill.selesai {
     background-color: var(--accent-green-bg);
-    color: var(--accent-green);
+    color: #047857;
+    /* Teks Green lebih tua */
 }
 
 .status-pill.diproses {
-    background-color: var(--accent-blue-bg);
-    color: var(--accent-blue);
+    background-color: #dbeafe;
+    /* BG Blue lebih muda */
+    color: #1e40af;
+    /* Teks Blue lebih tua */
 }
 
 .status-pill.belum {
-    background-color: #f1f5f9;
+    background-color: #f3f4f6;
+    /* Abu-abu */
     color: var(--text-secondary);
 }
 
@@ -330,8 +416,7 @@ body {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(-10px) scale(0.98);
-    transform-origin: top;
+    transform: translateY(-10px);
     background-color: var(--bg-main);
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -340,26 +425,26 @@ body {
 
 .table-row.expanded+.checklist-details {
     max-height: 800px;
-    /* Perbesar untuk konten yang panjang */
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     padding-top: 1.5rem;
     padding-bottom: 2rem;
     border-top: 1px solid var(--border-color);
 }
 
 .notes-section {
-    background-color: var(--accent-yellow-bg);
-    border-left: 4px solid var(--accent-yellow);
+    background-color: var(--accent-amber-bg);
+    border-left: 4px solid var(--accent-amber);
     border-radius: var(--border-radius-sm);
     padding: 1rem 1.25rem;
     margin-bottom: 1.5rem;
 }
 
 .notes-title {
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 0.5rem;
-    color: var(--text-secondary);
+    color: #92400e;
+    /* Teks Amber lebih tua */
 }
 
 .notes-section p {
@@ -378,23 +463,28 @@ body {
 }
 
 .checklist-title {
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1.25rem;
     color: var(--text-secondary);
 }
 
 .checklist-details ul {
     list-style: none;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    /* Gunakan Grid untuk layout yang lebih rapi */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    /* Responsif */
     gap: 1rem;
 }
 
 /* ========================================================== */
-/* KONSEP FINAL: AURA BERCAHAYA & IKON ANIMATIF           */
+/* STYLING CHECKBOX KUSTOM YANG SUDAH ADA                 */
 /* ========================================================== */
+/* (Tidak ada perubahan fungsional, hanya perbaikan minor jika perlu) */
+/* Kode styling checkbox dari :has(input:checked) Anda sudah bagus dan modern, */
+/* jadi saya akan mempertahankannya dengan sedikit penyesuaian warna agar */
+/* cocok dengan palet baru. */
 
-/* 1. Sembunyikan checkbox asli secara visual tapi tetap fungsional */
 .checklist-details .checklist-item input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -406,18 +496,21 @@ body {
     margin: 0;
     cursor: pointer;
     z-index: 2;
-    /* Pastikan di atas elemen lain untuk bisa diklik */
 }
 
-/* 2. Atur posisi dasar untuk <li> dan label */
 .checklist-details .checklist-item {
     position: relative;
-    /* Penting untuk posisi absolut anak */
     padding: 0.75rem 0.75rem 0.75rem 3rem;
-    /* Beri ruang kiri untuk ikon kustom */
     border-radius: var(--border-radius-md);
     transition: background-color 0.4s ease;
+    border: 1px solid transparent;
 }
+
+.checklist-details .checklist-item:hover {
+    background-color: #eef2f7;
+    border-color: var(--border-color);
+}
+
 
 .checklist-details .checklist-item label {
     font-weight: 500;
@@ -425,7 +518,6 @@ body {
     transition: color 0.4s ease, opacity 0.4s ease;
 }
 
-/* 3. Buat LINGKARAN sebagai 'wadah' ikon */
 .checklist-details .checklist-item::before {
     content: '';
     position: absolute;
@@ -434,66 +526,46 @@ body {
     transform: translateY(-50%);
     width: 22px;
     height: 22px;
-    background-color: transparent;
+    background-color: var(--bg-surface);
     border: 2px solid #cbd5e1;
-    /* Warna border abu-abu */
     border-radius: 50%;
-    /* Membuatnya menjadi lingkaran */
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* 4. Buat TANDA CENTANG (disembunyikan pada awalnya) */
 .checklist-details .checklist-item::after {
     content: '';
     position: absolute;
-    left: 1.25rem;
-    top: 50%;
+    left: 1.2rem;
+    /* Disesuaikan sedikit */
+    top: 48%;
+    /* Disesuaikan sedikit */
     width: 6px;
     height: 12px;
     border: solid var(--bg-surface);
-    /* Warna centang putih */
     border-width: 0 3px 3px 0;
-
-    /* Sembunyikan dan posisikan untuk animasi */
     opacity: 0;
     transform: translateY(-60%) rotate(45deg) scale(0.3);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-
-/* ========================================================== */
-/* === EFEK DAN ANIMASI SAAT CHECKBOX DICENTANG (checked) === */
-/* ========================================================== */
-
-/* A. Latar belakang <li> sedikit berubah untuk memberi kesan 'terangkat' */
+/* --- Efek Saat Dicentang --- */
 .checklist-details .checklist-item:has(input:checked) {
-    background-color: var(--bg-main);
+    background-color: #f7f7f7;
 }
 
-/* B. Animasi LINGKARAN: menjadi hijau dan memancarkan cahaya */
 .checklist-details .checklist-item:has(input:checked)::before {
     background-color: var(--accent-green);
     border-color: var(--accent-green);
-    /* INILAH EFEK AURA / GLOW YANG MEMBEDAKAN */
-    box-shadow: 0 0 12px 2px var(--accent-green-bg), 0 0 20px 5px #f0fdf499;
+    box-shadow: 0 0 12px 2px var(--accent-green-bg);
+    /* Aura diperhalus */
 }
 
-/* C. Animasi TANDA CENTANG: muncul dengan efek 'pop' */
 .checklist-details .checklist-item:has(input:checked)::after {
     opacity: 1;
     transform: translateY(-60%) rotate(45deg) scale(1);
 }
 
-/* D. Animasi TEKS LABEL: memudar dengan elegan */
-.checklist-details .checklist-item:has(input:checked) label {
-    color: var(--text-secondary);
-    opacity: 0.7;
-    /* Opsional: tambahkan coretan jika suka */
-    /* text-decoration: line-through; */
-}
-
-/* VERSI C: CORETAN DUA WARNA (TWO-TONE SCRIBBLE) */
-
+/* Efek coretan yang sudah ada dipertahankan */
 .checklist-details .checklist-item:has(input:checked) label {
     position: relative;
     text-decoration: none;
@@ -501,7 +573,6 @@ body {
     transition: color 0.4s ease;
 }
 
-/* Lapisan pertama: warna hijau utama */
 .checklist-details .checklist-item:has(input:checked) label::after {
     content: '';
     position: absolute;
@@ -509,7 +580,7 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%2322C55E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     animation: drawLine 0.5s 0.1s ease-out forwards;
@@ -517,7 +588,6 @@ body {
     transform-origin: left;
 }
 
-/* Lapisan kedua: warna biru dari palet tema */
 .checklist-details .checklist-item:has(input:checked) label::before {
     content: '';
     position: absolute;
@@ -525,17 +595,14 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3E%3C/svg%3E%0A");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    /* Muncul sedikit lebih lambat dan bergeser */
     animation: drawLine 0.6s 0.2s ease-out forwards;
     transform: scaleX(0) rotate(-1deg);
-    /* Sedikit diputar */
     transform-origin: left;
     opacity: 0.7;
 }
-
 
 @keyframes drawLine {
     from {
@@ -547,8 +614,9 @@ body {
     }
 }
 
+
 /* ========================================================== */
-/* MODAL (DIALOG & FORM)                                    */
+/* MODAL & FORM                                             */
 /* ========================================================== */
 .modal-overlay {
     position: fixed;
@@ -556,8 +624,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(4px);
+    background-color: rgba(17, 24, 39, 0.6);
+    /* Lebih gelap */
+    backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -566,7 +635,6 @@ body {
     pointer-events: none;
     transition: opacity 0.3s ease;
     padding: 1rem;
-    /* Padding untuk layar kecil */
 }
 
 .modal-overlay.visible {
@@ -576,20 +644,18 @@ body {
 
 .modal-content {
     background: white;
-    padding: 2rem;
+    padding: 2.5rem;
+    /* Padding lebih besar */
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    max-width: 520px;
+    box-shadow: var(--shadow-lg);
+    max-width: 550px;
     width: 100%;
-    /* Ubah dari 90% ke 100% agar padding overlay berfungsi */
     text-align: left;
     transform: scale(0.95) translateY(10px);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
     max-height: 90vh;
-    /* Batas tinggi modal */
     overflow-y: auto;
-    /* Scroll jika konten melebihi */
 }
 
 .modal-overlay.visible .modal-content {
@@ -599,6 +665,7 @@ body {
 
 .modal-content h2 {
     font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
 }
@@ -613,7 +680,8 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+    /* Jarak lebih besar */
 }
 
 #addDataForm .modal-actions,
@@ -622,11 +690,9 @@ body {
     border-top: 1px solid var(--border-color);
 }
 
-/* ========================================================== */
-/* GAYA FORM                                                */
-/* ========================================================== */
+/* --- GAYA FORM --- */
 .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
@@ -634,34 +700,33 @@ body {
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
 }
 
 .form-group input[type="text"],
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.8rem 1rem;
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--border-color);
     font-size: 1rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     transition: var(--transition-fast);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 80px;
+    background-color: var(--bg-main);
 }
 
 .form-group input[type="text"]:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px var(--accent-blue-bg);
+    border-color: var(--accent-indigo);
+    background-color: var(--bg-surface);
+    box-shadow: 0 0 0 3px var(--accent-indigo-bg);
 }
 
+/* ... Kode lainnya (task-checkbox, founder-list, etc.) dipertahankan ... */
+/* Saya hanya akan menyesuaikan warna dan sedikit padding */
 .task-checkbox-group {
     display: flex;
     flex-wrap: wrap;
@@ -681,12 +746,14 @@ body {
 }
 
 .task-checkbox:hover {
-    border-color: var(--accent-blue);
+    border-color: var(--accent-indigo);
+    background-color: var(--accent-indigo-bg);
 }
 
 .task-checkbox input {
     width: 16px;
     height: 16px;
+    accent-color: var(--accent-indigo);
 }
 
 .founder-input-group {
@@ -715,10 +782,10 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: var(--accent-indigo-bg);
-    color: var(--accent-indigo);
+    color: var(--accent-indigo-dark);
     padding: 0.6rem 1rem;
     border-radius: var(--border-radius-sm);
-    font-weight: 500;
+    font-weight: 600;
     animation: fadeIn 0.3s ease;
 }
 
@@ -752,89 +819,40 @@ body {
 }
 
 /* ========================================================== */
-/* KONTROL FILTER & URUTAN                                  */
+/* FOOTER BARU                                              */
 /* ========================================================== */
-
-.filter-sort-wrapper {
+.dashboard-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    background-color: var(--bg-main);
-    padding: 0.3rem;
-    border-radius: var(--border-radius-md);
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    /* Izinkan wrapping */
-}
-
-.filter-pills {
-    display: flex;
-    padding: 0;
-    gap: 0.5rem;
-    background-color: transparent;
-}
-
-.filter-pills .pill,
-.sort-control .sort-dropdown {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding: 0.6rem 1.1rem;
-    border: none;
-    border-radius: var(--border-radius-sm);
-    background-color: transparent;
-    font-weight: 600;
-    font-size: 0.85rem;
     color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.25s ease;
+    font-size: 0.9rem;
 }
 
-.filter-pills .pill:hover,
-.sort-control .sort-dropdown:hover {
-    color: var(--text-primary);
-    background-color: #eef2f7;
+.dashboard-footer nav {
+    display: flex;
+    gap: 1.5rem;
 }
 
-.filter-pills .pill.active {
-    background-color: var(--bg-surface);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
-    font-weight: 700;
+.dashboard-footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
-.sort-control {
-    position: relative;
-}
-
-.sort-control .sort-dropdown {
-    padding-right: 2.5rem;
-}
-
-.sort-control::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0.85rem;
-    width: 18px;
-    height: 18px;
-    transform: translateY(-50%);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    pointer-events: none;
-}
-
-.sort-control .sort-dropdown:focus {
-    outline: none;
-    background-color: var(--bg-surface);
-    box-shadow: var(--shadow-sm);
+.dashboard-footer a:hover {
+    color: var(--accent-indigo);
 }
 
 /* ========================================================== */
-/* =========   PENYESUAIAN RESPONSIVE (MOBILE)   ========== */
+/* PENYESUAIAN RESPONSIVE (MOBILE)                          */
 /* ========================================================== */
+/* Kode responsif yang ada sudah cukup baik, hanya perlu sedikit penyesuaian */
 
-/* Untuk Tablet dan layar sedang (<= 992px) */
 @media (max-width: 992px) {
     .dashboard-container {
         padding: 1.5rem;
@@ -842,30 +860,25 @@ body {
 
     .dashboard-header {
         flex-direction: column;
-        /* Susun vertikal */
         align-items: flex-start;
-        /* Rata kiri */
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
     .table-header,
     .table-row {
         grid-template-columns: 2.5fr 1fr 1fr 80px;
-        /* Kolom aksi lebih kecil */
         gap: 1rem;
         padding: 0 1rem;
     }
 }
 
-/* Untuk Ponsel dan layar kecil (<= 768px) */
 @media (max-width: 768px) {
     .dashboard-container {
-        padding: 1rem;
+        padding: 1.5rem 1rem;
     }
 
     .header-title h1 {
         font-size: 1.5rem;
-        /* Ukuran font judul lebih kecil */
     }
 
     .header-title p {
@@ -875,12 +888,10 @@ body {
     .card-controls {
         flex-direction: column;
         align-items: stretch;
-        /* Penuhi lebar */
     }
 
     .search-bar input {
         max-width: none;
-        /* Hapus batas lebar di mobile */
     }
 
     .filter-sort-wrapper {
@@ -888,72 +899,80 @@ body {
         justify-content: space-between;
     }
 
-    /* === Transformasi Tabel Menjadi Kartu (Card) === */
+    .dashboard-footer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
     .table-header {
         display: none;
-        /* 1. Sembunyikan header tabel */
     }
 
     .table-row {
         display: block;
-        /* 2. Ubah baris menjadi block, seperti kartu */
         border: 1px solid var(--border-color);
         border-radius: var(--border-radius-md);
         margin-bottom: 1rem;
-        padding: 1rem;
+        padding: 1.25rem;
         background-color: var(--bg-surface);
+        box-shadow: var(--shadow-sm);
     }
 
+    .table-row:hover {
+        transform: none;
+    }
+
+    /* Matikan efek angkat di mobile */
     .table-row:last-child {
         margin-bottom: 0;
     }
 
     .table-row .col {
         display: flex;
-        /* 3. Gunakan flex untuk mengatur label dan isi */
         justify-content: space-between;
         align-items: center;
-        padding: 0.75rem 0;
+        padding: 0.85rem 0;
         border-bottom: 1px dashed var(--border-color);
         text-align: right;
-        /* Konten rata kanan */
     }
 
     .table-row .col:last-child {
         border-bottom: none;
     }
 
-    /* 4. Tampilkan label dari atribut data-label yang kita tambah di JS */
     .table-row .col::before {
         content: attr(data-label);
         font-weight: 600;
         color: var(--text-secondary);
         text-align: left;
-        /* Label rata kiri */
     }
 
     .table-row .col.project-name {
-        /* Kolom nama perusahaan dibuat spesial */
         display: block;
         text-align: left;
         border-bottom: 1px solid var(--border-color);
         padding-bottom: 1rem;
         margin-bottom: 0.5rem;
         font-size: 1.1rem;
+        font-weight: 700;
     }
 
     .table-row .col.project-name::before {
         display: none;
-        /* Tidak perlu label "Perusahaan:" */
     }
 
     .action-buttons {
         justify-content: flex-end;
-        /* Aksi tetap di ujung kanan */
     }
 
     .checklist-details {
         padding-left: 1rem;
         padding-right: 1rem;
     }
+
+    .checklist-details ul {
+        grid-template-columns: 1fr;
+    }
+
+    /* Buat checklist jadi 1 kolom di mobile */
 }
