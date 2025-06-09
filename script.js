@@ -59,32 +59,27 @@ async function fetchData() {
 function filterAndRenderData() {
     let processedData = [...allData];
 
-    // 1. Langkah Filtering (tidak ada perubahan)
     if (currentFilter !== 'All') {
         processedData = processedData.filter(p => p.jenis_verifikasi === currentFilter);
     }
 
-    // 2. Langkah Pencarian (tidak ada perubahan)
     if (currentSearchTerm) {
         processedData = processedData.filter(p =>
             p.nama_perusahaan.toLowerCase().includes(currentSearchTerm.toLowerCase())
         );
     }
 
-    // 3. LANGKAH BARU: Pengurutan (Sorting)
     processedData.sort((a, b) => {
-        // Ekstrak timestamp dari ID (misal: "P-1717908264000" -> 1717908264000)
         const timeA = parseInt(a.id.split('-')[1]);
         const timeB = parseInt(b.id.split('-')[1]);
 
         if (currentSortOrder === 'oldest-first') {
-            return timeA - timeB; // Urutan menaik (Lama ke Baru)
+            return timeA - timeB;
         } else {
-            return timeB - timeA; // Urutan menurun (Terbaru ke Lama)
+            return timeB - timeA;
         }
     });
 
-    // 4. Render data yang sudah diproses
     renderTable(processedData);
 }
 
@@ -213,7 +208,6 @@ function createMainRow(perusahaan) {
     row.className = 'table-row';
     row.id = `row-${perusahaan.id}`;
     
-    // === PERUBAHAN DIMULAI DI SINI: Menambahkan atribut data-label ===
     row.innerHTML = `
         <div class="col project-name">${perusahaan.nama_perusahaan}</div>
         <div class="col" data-label="Tipe">
@@ -242,7 +236,6 @@ function createMainRow(perusahaan) {
             </div>
         </div>
     `;
-    // === PERUBAHAN SELESAI DI SINI ===
     
     row.addEventListener('click', (event) => { 
         if (event.target.closest('.action-btn')) return; 
@@ -529,15 +522,21 @@ sortSelect.addEventListener('change', (e) => {
     filterAndRenderData(); 
 });
 
-// ===== KODE UNTUK MENGHILANGKAN ANIMASI PEMBUKA =====
+// Jalankan pengambilan data utama
+fetchData();
+
+
+// ==========================================================
+// KODE UNTUK MENGHILANGKAN ANIMASI PEMBUKA (VERSI BARU)
+// ==========================================================
 window.addEventListener('load', () => {
     const startupAnimation = document.getElementById('startup-animation');
-    // Beri sedikit jeda agar animasi terlihat
+    
+    // Durasi total animasi di CSS adalah sekitar 2 detik.
+    // Kita beri jeda lebih lama sebelum menghilangkannya agar animasi selesai.
     setTimeout(() => {
         if (startupAnimation) {
             startupAnimation.classList.add('hidden');
         }
-    }, 1500); // Tunggu 1.5 detik sebelum menghilang
+    }, 2500); // Tunggu 2.5 detik
 });
-
-fetchData();

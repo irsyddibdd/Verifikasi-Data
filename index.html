@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi Dashboard</title>
 
+    <!-- MANIFEST UNTUK PWA & SPLASH SCREEN -->
     <link rel="manifest" href="manifest.webmanifest">
-
     <meta name="theme-color" content="#f8f9fe">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,14 +20,29 @@
 </head>
 
 <body>
+
+    <!-- ===== ELEMEN ANIMASI PEMBUKA (VERSI BARU) START ===== -->
     <div id="startup-animation">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path fill-rule="evenodd"
-                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                clip-rule="evenodd" />
-        </svg>
+        <div class="animation-content">
+            <!-- Logo SVG yang bisa dianimasikan -->
+            <svg class="checkmark-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <!-- Lingkaran luar -->
+                <path class="circle" fill="none" stroke="#4f46e5" stroke-width="5" d="M 50, 5
+                    a 45,45 0 1,1 0,90
+                    a 45,45 0 1,1 0,-90" />
+                <!-- Tanda centang -->
+                <path class="check" fill="none" stroke="#4f46e5" stroke-width="6" stroke-linecap="round"
+                    d="M 30 52 l 15 15 l 25 -25" />
+            </svg>
+            <!-- Teks Judul Aplikasi -->
+            <h2 class="animation-text">Verifikasi Data Apps</h2>
         </div>
+    </div>
+    <!-- ===== ELEMEN ANIMASI PEMBUKA (VERSI BARU) END ===== -->
+
+
     <div class="dashboard-container">
+        <!-- HEADER -->
         <header class="dashboard-header">
             <div class="header-title">
                 <svg class="header-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -52,6 +67,7 @@
             </div>
         </header>
 
+        <!-- KONTEN UTAMA -->
         <main class="content-area">
             <div class="data-card">
                 <div class="card-controls">
@@ -88,11 +104,13 @@
             </div>
         </main>
 
+        <!-- FOOTER -->
         <footer class="dashboard-footer">
             <p>&copy; 2025 Aplikasi Verifikasi Data</p>
         </footer>
     </div>
 
+    <!-- MODAL-MODAL -->
     <div id="confirmationModal" class="modal-overlay">
         <div class="modal-content">
             <h2 id="modalTitle">Konfirmasi Tindakan</h2>

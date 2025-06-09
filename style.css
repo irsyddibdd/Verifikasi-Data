@@ -2,21 +2,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ========================================================== */
-/* PALET WARNA & VARIABEL DESAIN BARU                       */
+/* ANIMASI PEMBUKA (VERSI BARU)                               */
+/* ========================================================== */
+#startup-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-main); /* Sama dengan splash screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Transisi untuk fade-out di akhir */
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#startup-animation.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.animation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.checkmark-logo {
+    width: 100px;
+    height: 100px;
+}
+
+/* Mengatur path SVG untuk animasi 'menggambar' */
+.checkmark-logo .circle {
+    stroke-dasharray: 283; /* Keliling lingkaran (2 * pi * 45) */
+    stroke-dashoffset: 283;
+    animation: draw-circle 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.checkmark-logo .check {
+    stroke-dasharray: 80; /* Panjang path centang */
+    stroke-dashoffset: 80;
+    /* Mulai setelah lingkaran selesai digambar */
+    animation: draw-check 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.8s forwards;
+}
+
+/* Teks animasi */
+.animation-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    opacity: 0; /* Mulai dari transparan */
+    transform: translateY(20px); /* Mulai dari bawah */
+    /* Mulai setelah logo hampir selesai */
+    animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+}
+
+/* Keyframes untuk menggambar lingkaran */
+@keyframes draw-circle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Keyframes untuk menggambar centang */
+@keyframes draw-check {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Keyframes untuk teks muncul */
+@keyframes fade-in-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ========================================================== */
+/* SISA KODE CSS ANDA (TIDAK PERLU DIUBAH)                    */
 /* ========================================================== */
 :root {
-    /* Warna Dasar & Netral yang Ditingkatkan */
     --bg-main: #f8f9fe;
-    /* Sedikit lebih kebiruan */
     --bg-surface: #ffffff;
     --border-color: #e5e7eb;
-    /* Abu-abu yang lebih lembut */
     --text-primary: #111827;
-    /* Hitam yang lebih pekat */
     --text-secondary: #6b7280;
     --text-tertiary: #9ca3af;
-
-    /* Warna Aksen Baru (Fokus pada Indigo) */
     --accent-indigo: #4f46e5;
     --accent-indigo-dark: #4338ca;
     --accent-indigo-bg: #eef2ff;
@@ -25,10 +102,7 @@
     --accent-green: #10b981;
     --accent-green-bg: #d1fae5;
     --accent-amber: #f59e0b;
-    /* Mengganti yellow ke amber */
     --accent-amber-bg: #fffbeb;
-
-    /* Properti Desain yang Disempurnakan */
     --border-radius-sm: 8px;
     --border-radius-md: 12px;
     --border-radius-lg: 16px;
@@ -47,7 +121,6 @@
 }
 
 body {
-    /* Menggunakan Font Baru */
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
@@ -55,15 +128,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* ========================================================== */
-/* STRUKTUR UTAMA & HEADER                                  */
-/* ========================================================== */
 .dashboard-container {
     padding: 2rem 3rem;
     max-width: 1800px;
-    /* Batasi lebar maksimum */
     margin: 0 auto;
-    /* Pusatkan container */
 }
 
 .dashboard-header {
@@ -77,7 +145,6 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    /* Jarak antara logo dan teks */
 }
 
 .header-logo {
@@ -88,9 +155,7 @@ body {
 
 .header-title h1 {
     font-size: 1.875rem;
-    /* 30px */
     font-weight: 800;
-    /* Lebih tebal */
     line-height: 1.2;
     font-variant-ligatures: none;
 }
@@ -101,15 +166,11 @@ body {
     color: var(--text-secondary);
 }
 
-/* ========================================================== */
-/* TOMBOL (BUTTON)                                          */
-/* ========================================================== */
 .btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    /* Sedikit lebih besar */
     border: 1px solid transparent;
     border-radius: var(--border-radius-sm);
     font-weight: 600;
@@ -147,13 +208,9 @@ body {
 
 .btn-secondary:hover {
     border-color: #d1d5db;
-    /* Sedikit lebih gelap */
     background-color: #f9fafb;
 }
 
-/* ========================================================== */
-/* KARTU DATA & KONTROL                                     */
-/* ========================================================== */
 .data-card {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -220,7 +277,6 @@ body {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 6px;
-    /* Sedikit lebih tajam */
     background-color: transparent;
     color: var(--text-secondary);
     font-weight: 600;
@@ -238,7 +294,6 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
-/* --- Pengurutan (Sort) --- */
 .sort-control {
     position: relative;
 }
@@ -270,13 +325,8 @@ body {
     pointer-events: none;
 }
 
-
-/* ========================================================== */
-/* TABEL DATA                                               */
-/* ========================================================== */
 .data-table {
     padding: 0;
-    /* Padding diatur di baris */
 }
 
 #loading,
@@ -291,7 +341,6 @@ body {
 .table-row {
     display: grid;
     grid-template-columns: 3fr 1fr 1.2fr 100px;
-    /* Lebar status disesuaikan */
     gap: 1.5rem;
     align-items: center;
     padding: 0 1.5rem;
@@ -318,7 +367,6 @@ body {
 .table-row:hover {
     background-color: var(--accent-indigo-bg);
     transform: scale(1.01);
-    /* Efek angkat halus */
 }
 
 .table-row.expanded {
@@ -342,34 +390,27 @@ body {
 
 .type-pill.Perubahan {
     background-color: #e0e7ff;
-    /* BG Indigo lebih muda */
     color: #3730a3;
-    /* Teks Indigo lebih tua */
 }
 
 .type-pill.Pendirian,
 .type-pill.Lainnya {
     background-color: var(--accent-amber-bg);
     color: #b45309;
-    /* Teks Amber lebih tua */
 }
 
 .status-pill.selesai {
     background-color: var(--accent-green-bg);
     color: #047857;
-    /* Teks Green lebih tua */
 }
 
 .status-pill.diproses {
     background-color: #dbeafe;
-    /* BG Blue lebih muda */
     color: #1e40af;
-    /* Teks Blue lebih tua */
 }
 
 .status-pill.belum {
     background-color: #f3f4f6;
-    /* Abu-abu */
     color: var(--text-secondary);
 }
 
@@ -409,9 +450,6 @@ body {
     stroke: var(--accent-red);
 }
 
-/* ========================================================== */
-/* DETAIL CHECKLIST & CATATAN                               */
-/* ========================================================== */
 .checklist-details {
     max-height: 0;
     overflow: hidden;
@@ -444,7 +482,6 @@ body {
     font-weight: 700;
     margin-bottom: 0.5rem;
     color: #92400e;
-    /* Teks Amber lebih tua */
 }
 
 .notes-section p {
@@ -471,15 +508,10 @@ body {
 .checklist-details ul {
     list-style: none;
     display: grid;
-    /* Gunakan Grid untuk layout yang lebih rapi */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    /* Responsif */
     gap: 1rem;
 }
 
-/* ========================================================== */
-/* STYLING CHECKBOX KUSTOM YANG SUDAH ADA                 */
-/* ========================================================== */
 .checklist-details .checklist-item input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -531,9 +563,7 @@ body {
     content: '';
     position: absolute;
     left: 1.2rem;
-    /* Disesuaikan sedikit */
     top: 48%;
-    /* Disesuaikan sedikit */
     width: 6px;
     height: 12px;
     border: solid var(--bg-surface);
@@ -543,7 +573,6 @@ body {
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* --- Efek Saat Dicentang --- */
 .checklist-details .checklist-item:has(input:checked) {
     background-color: #f7f7f7;
 }
@@ -552,7 +581,6 @@ body {
     background-color: var(--accent-green);
     border-color: var(--accent-green);
     box-shadow: 0 0 12px 2px var(--accent-green-bg);
-    /* Aura diperhalus */
 }
 
 .checklist-details .checklist-item:has(input:checked)::after {
@@ -567,9 +595,6 @@ body {
     transition: color 0.4s ease;
 }
 
-/* ========================================================== */
-/* MODAL & FORM                                             */
-/* ========================================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -577,7 +602,6 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(17, 24, 39, 0.6);
-    /* Lebih gelap */
     backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
@@ -597,7 +621,6 @@ body {
 .modal-content {
     background: white;
     padding: 2.5rem;
-    /* Padding lebih besar */
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-lg);
     max-width: 550px;
@@ -633,7 +656,6 @@ body {
     justify-content: flex-end;
     gap: 0.75rem;
     margin-top: 2.5rem;
-    /* Jarak lebih besar */
 }
 
 #addDataForm .modal-actions,
@@ -642,7 +664,6 @@ body {
     border-top: 1px solid var(--border-color);
 }
 
-/* --- GAYA FORM --- */
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -768,9 +789,6 @@ body {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* ========================================================== */
-/* FOOTER BARU                                              */
-/* ========================================================== */
 .dashboard-footer {
     margin-top: 3rem;
     padding-top: 1.5rem;
@@ -780,10 +798,6 @@ body {
     font-size: 0.9rem;
 }
 
-
-/* ========================================================== */
-/* PENYESUAIAN RESPONSIVE (MOBILE)                          */
-/* ========================================================== */
 @media (max-width: 992px) {
     .dashboard-container {
         padding: 1.5rem;
@@ -853,7 +867,6 @@ body {
         transform: none;
     }
 
-    /* Matikan efek angkat di mobile */
     .table-row:last-child {
         margin-bottom: 0;
     }
@@ -904,11 +917,7 @@ body {
     .checklist-details ul {
         grid-template-columns: 1fr;
     }
-
-    /* Buat checklist jadi 1 kolom di mobile */
 }
-
-/* VERSI C: CORETAN DUA WARNA (TWO-TONE SCRIBBLE) */
 
 .checklist-details .checklist-item:has(input:checked) label {
     position: relative;
@@ -917,7 +926,6 @@ body {
     transition: color 0.4s ease;
 }
 
-/* Lapisan pertama: warna hijau utama */
 .checklist-details .checklist-item:has(input:checked) label::after {
     content: '';
     position: absolute;
@@ -933,7 +941,6 @@ body {
     transform-origin: left;
 }
 
-/* Lapisan kedua: warna biru dari palet tema */
 .checklist-details .checklist-item:has(input:checked) label::before {
     content: '';
     position: absolute;
@@ -944,10 +951,8 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    /* Muncul sedikit lebih lambat dan bergeser */
     animation: drawLine 0.6s 0.2s ease-out forwards;
     transform: scaleX(0) rotate(-1deg);
-    /* Sedikit diputar */
     transform-origin: left;
     opacity: 0.7;
 }
@@ -960,98 +965,5 @@ body {
 
     to {
         transform: scaleX(1);
-    }
-}
-
-/* ========================================================== */
-/* ANIMASI PEMBUKA (STARTUP ANIMATION)                      */
-/* ========================================================== */
-#startup-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-main); /* Sama dengan splash screen */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-}
-
-#startup-animation.hidden {
-    opacity: 0;
-    visibility: hidden; /* Sembunyikan setelah transisi selesai */
-}
-
-#startup-animation svg {
-    width: 100px; /* Ukuran logo */
-    height: 100px;
-    color: var(--accent-indigo);
-    animation: startup-pulse 1.5s ease-in-out forwards;
-}
-
-@keyframes startup-pulse {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1.1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* ========================================================== */
-/* ANIMASI PEMBUKA (STARTUP ANIMATION)                      */
-/* ========================================================== */
-#startup-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-main);
-    /* Sama dengan splash screen */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-}
-
-#startup-animation.hidden {
-    opacity: 0;
-    visibility: hidden;
-    /* Sembunyikan setelah transisi selesai */
-}
-
-#startup-animation svg {
-    width: 100px;
-    /* Ukuran logo */
-    height: 100px;
-    color: var(--accent-indigo);
-    animation: startup-pulse 1.5s ease-in-out forwards;
-}
-
-@keyframes startup-pulse {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-
-    50% {
-        transform: scale(1.1);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
     }
 }
