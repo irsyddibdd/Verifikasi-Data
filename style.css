@@ -1,0 +1,688 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ========================================================== */
+/* PALET WARNA & VARIABEL DESAIN MODERN                     */
+/* ========================================================== */
+:root {
+    /* Warna Dasar */
+    --bg-main: #f7f9fc;
+    --bg-surface: #ffffff;
+    --border-color: #eef2f7;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-tertiary: #94a3b8;
+
+    /* Warna Aksen */
+    --accent-blue: #3b82f6;
+    --accent-blue-bg: #eff6ff;
+    --accent-red: #ef4444;
+    --accent-green: #22c55e;
+    --accent-green-bg: #f0fdf4;
+    --accent-yellow: #f59e0b;
+    --accent-yellow-bg: #fffbeb;
+    --accent-indigo: #6366f1;
+    --accent-indigo-bg: #eef2ff;
+
+    /* Properti Desain */
+    --border-radius-sm: 6px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================================== */
+/* STRUKTUR UTAMA & HEADER                                  */
+/* ========================================================== */
+.dashboard-container {
+    padding: 2rem 3rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.header-title h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.header-title p {
+    margin-top: 0.25rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* ========================================================== */
+/* TOMBOL (BUTTON)                                          */
+/* ========================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-secondary {
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    border-color: #d1d9e4;
+}
+
+/* ========================================================== */
+/* KARTU DATA & KONTROL                                     */
+/* ========================================================== */
+.data-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.card-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-bar input {
+    width: 350px;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.85rem center;
+    transition: var(--transition-fast);
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px var(--accent-blue-bg);
+}
+
+.filter-pills {
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--bg-main);
+    padding: 0.25rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.filter-pills .pill {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    background-color: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.filter-pills .pill:hover {
+    color: var(--text-primary);
+}
+
+.filter-pills .pill.active {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ========================================================== */
+/* TABEL DATA                                               */
+/* ========================================================== */
+.data-table {
+    padding: 0.5rem 0;
+}
+
+#loading,
+.table-row-nodata {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-secondary);
+}
+
+.table-header,
+.table-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 120px;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.table-header {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.table-row {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-top: 1px solid var(--border-color);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.table-row:hover {
+    background-color: var(--bg-main);
+}
+
+.table-row.expanded {
+    background-color: var(--accent-blue-bg);
+}
+
+.table-row .col.project-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.pill-base {
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.type-pill.Perubahan {
+    background-color: var(--accent-indigo-bg);
+    color: var(--accent-indigo);
+}
+
+.type-pill.Pendirian {
+    background-color: var(--accent-yellow-bg);
+    color: var(--accent-yellow);
+}
+
+.status-pill.selesai {
+    background-color: var(--accent-green-bg);
+    color: var(--accent-green);
+}
+
+.status-pill.diproses {
+    background-color: var(--accent-blue-bg);
+    color: var(--accent-blue);
+}
+
+.status-pill.belum {
+    background-color: #f1f5f9;
+    color: var(--text-secondary);
+}
+
+.action-buttons {
+    text-align: right;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-buttons button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 99px;
+    line-height: 0;
+    transition: var(--transition-fast);
+}
+
+.action-buttons svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-tertiary);
+    stroke-width: 2.5;
+}
+
+.action-buttons button:hover {
+    background-color: var(--border-color);
+}
+
+.action-buttons button:hover svg {
+    stroke: var(--text-primary);
+}
+
+.action-buttons button.delete-btn:hover svg {
+    stroke: var(--accent-red);
+}
+
+/* ========================================================== */
+/* DETAIL CHECKLIST & CATATAN                               */
+/* ========================================================== */
+.checklist-details {
+    /* Sembunyikan konten secara visual dan dari layout */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    /* Atur posisi awal animasi (sedikit ke atas dan menyusut) */
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top;
+    /* Titik animasi dimulai dari atas */
+
+    /* Latar belakang dan padding dasar */
+    background-color: var(--bg-main);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+
+    /* Transisi yang fokus pada transform dan opacity */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.table-row.expanded+.checklist-details {
+    /* Beri ruang yang cukup untuk konten saat terbuka */
+    max-height: 600px;
+
+    /* Kembalikan ke keadaan normal saat terbuka */
+    opacity: 1;
+    transform: translateY(0) scale(1);
+
+    /* Terapkan padding dan border saat terbuka */
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Bagian Catatan (Styling tidak berubah) */
+.notes-section {
+    background-color: var(--accent-yellow-bg);
+    border-left: 4px solid var(--accent-yellow);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.notes-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.notes-section p {
+    color: #92400e;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+/* Bagian Checklist (Styling tidak berubah) */
+.checklist-section {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.notes-section+.checklist-section {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.checklist-title {
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.checklist-details ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checklist-details .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+}
+
+.checklist-details .checklist-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--accent-green);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checklist-details .checklist-item label {
+    transition: color 0.2s ease;
+}
+
+.checklist-details .checklist-item input:checked+label {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+/* === PERUBAHAN DIMULAI DI SINI === */
+.notes-section {
+    background-color: var(--accent-yellow-bg);
+    border-left: 4px solid var(--accent-yellow);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.notes-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.notes-section p {
+    color: #92400e;
+    /* Warna teks yang lebih gelap agar kontras */
+    line-height: 1.6;
+    white-space: pre-wrap;
+    /* Menjaga format spasi dan baris baru */
+}
+
+.checklist-section {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.notes-section+.checklist-section {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.checklist-title {
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+}
+
+/* === PERUBAHAN SELESAI DI SINI === */
+
+
+.checklist-details ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checklist-details .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+}
+
+.checklist-details .checklist-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--accent-green);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checklist-details .checklist-item label {
+    transition: color 0.2s ease;
+}
+
+.checklist-details .checklist-item input:checked+label {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+/* ========================================================== */
+/* MODAL (DIALOG & FORM)                                    */
+/* ========================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    max-width: 520px;
+    width: 90%;
+    text-align: left;
+    transform: scale(0.95) translateY(10px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+#addDataForm .modal-actions,
+#editDataForm .modal-actions {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ========================================================== */
+/* GAYA FORM                                                */
+/* ========================================================== */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+/* === PERUBAHAN DIMULAI DI SINI (Menambahkan textarea) === */
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: var(--transition-fast);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px var(--accent-blue-bg);
+}
+
+/* === PERUBAHAN SELESAI DI SINI === */
+
+.task-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.task-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--bg-main);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.task-checkbox:hover {
+    border-color: var(--accent-blue);
+}
+
+.task-checkbox input {
+    width: 16px;
+    height: 16px;
+}
+
+.founder-input-group {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.founder-input-group input {
+    flex-grow: 1;
+}
+
+.founder-input-group .btn {
+    flex-shrink: 0;
+}
+
+.founder-list {
+    list-style: none;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.founder-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--accent-indigo-bg);
+    color: var(--accent-indigo);
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.founder-list .remove-founder-btn {
+    background: none;
+    border: none;
+    color: var(--accent-indigo);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0.25rem;
+    line-height: 0;
+    border-radius: 99px;
+    transition: var(--transition-fast);
+}
+
+.founder-list .remove-founder-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}

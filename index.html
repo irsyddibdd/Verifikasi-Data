@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-title">
+                <h1>Verifikasi Data</h1>
+                <p>Monitor dan kelola semua proses verifikasi.</p>
+            </div>
+            <div class="header-actions">
+                <button id="addNewBtn" class="btn btn-primary">+ Tambah Data Baru</button>
+            </div>
+        </header>
+
+        <main class="content-area">
+            <div class="data-card">
+                <div class="card-controls">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Cari berdasarkan nama perusahaan...">
+                    </div>
+                    <div class="filter-pills">
+                        <button class="pill active">All</button>
+                        <button class="pill">Perubahan</button>
+                        <button class="pill">Pendirian</button>
+                    </div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <div class="col">Perusahaan</div>
+                        <div class="col">Tipe</div>
+                        <div class="col">Status</div>
+                        <div class="col">Aksi</div>
+                    </div>
+                    <div id="loading">Memuat data...</div>
+                    <div id="table-body"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="confirmationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modalTitle">Konfirmasi Tindakan</h2>
+            <p id="modalMessage">Apakah kamu yakin ingin melanjutkan?</p>
+            <div class="modal-actions">
+                <button id="modalCancelBtn" class="btn btn-secondary">Batal</button>
+                <button id="modalConfirmBtn" class="btn btn-primary">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addDataModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Tambah Data Verifikasi Baru</h2>
+            <p>Pilih tugas standar dan tambahkan pendiri jika diperlukan.</p>
+            <form id="addDataForm">
+                <div class="form-group">
+                    <label for="namaPerusahaan">Nama Perusahaan</label>
+                    <input type="text" id="namaPerusahaan" name="namaPerusahaan" required>
+                </div>
+                <div class="form-group">
+                    <label for="jenisVerifikasi">Jenis Verifikasi</label>
+                    <select id="jenisVerifikasi" name="jenisVerifikasi" required>
+                        <option value="Pendirian" selected>Pendirian</option>
+                        <option value="Perubahan">Perubahan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Tugas Standar</label>
+                    <div class="task-checkbox-group">
+                        <label class="task-checkbox"><input type="checkbox" value="Data Perusahaan"> Data
+                            Perusahaan</label>
+                        <label class="task-checkbox"><input type="checkbox" value="Data KBLI"> Data KBLI</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="founderName">Tambah Pendiri</label>
+                    <div class="founder-input-group">
+                        <input type="text" id="founderName" placeholder="Ketik nama pendiri...">
+                        <button type="button" id="addFounderBtn" class="btn btn-secondary">Tambah</button>
+                    </div>
+                    <ul id="founderList" class="founder-list"></ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="catatan">Catatan (Opsional)</label>
+                    <textarea id="catatan" name="catatan" rows="3"
+                        placeholder="Tambahkan catatan jika ada..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="addModalCancelBtn" class="btn btn-secondary">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="editDataModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Edit Data Verifikasi</h2>
+            <p>Perbarui detail dan tugas verifikasi di bawah ini.</p>
+            <form id="editDataForm">
+                <input type="hidden" id="editCompanyId" name="editCompanyId">
+                <div class="form-group">
+                    <label for="editNamaPerusahaan">Nama Perusahaan</label>
+                    <input type="text" id="editNamaPerusahaan" name="editNamaPerusahaan" required>
+                </div>
+                <div class="form-group">
+                    <label for="editJenisVerifikasi">Jenis Verifikasi</label>
+                    <select id="editJenisVerifikasi" name="editJenisVerifikasi" required>
+                        <option value="Pendirian">Pendirian</option>
+                        <option value="Perubahan">Perubahan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Tugas Standar</label>
+                    <div id="editTaskCheckboxGroup" class="task-checkbox-group">
+                        <label class="task-checkbox"><input type="checkbox" value="Data Perusahaan"> Data
+                            Perusahaan</label>
+                        <label class="task-checkbox"><input type="checkbox" value="Data KBLI"> Data KBLI</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editFounderName">Tambah Pendiri</label>
+                    <div class="founder-input-group">
+                        <input type="text" id="editFounderName" placeholder="Ketik nama pendiri...">
+                        <button type="button" id="editAddFounderBtn" class="btn btn-secondary">Tambah</button>
+                    </div>
+                    <ul id="editFounderList" class="founder-list"></ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="editCatatan">Catatan (Opsional)</label>
+                    <textarea id="editCatatan" name="editCatatan" rows="3"
+                        placeholder="Tambahkan atau ubah catatan..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="editModalCancelBtn" class="btn btn-secondary">Batal</button>
+                    <button type="submit" id="editModalConfirmBtn" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
