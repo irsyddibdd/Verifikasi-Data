@@ -3,7 +3,7 @@
 // ==========================================================
 
 // GANTI DENGAN URL "APLIKASI WEB" ANDA YANG SUDAH BERFUNGSI
-const API_URL = 'https://script.google.com/macros/s/AKfycbxCEPnIrRpXKQ4fYPLseAqoWxVKvXaT_4n_vrdD_WpJeeVKqFpavLxjJ-NJ01_r1xVn/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbznLpe9CLQHofvMoDwka3kXJMxc7Yu49E0RXcawiR87QjEF4Iu6NHV_diqmBI685yO2/exec';
 
 // --- Variabel Global ---
 let allData = [];
