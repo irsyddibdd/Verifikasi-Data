@@ -480,11 +480,6 @@ body {
 /* ========================================================== */
 /* STYLING CHECKBOX KUSTOM YANG SUDAH ADA                 */
 /* ========================================================== */
-/* (Tidak ada perubahan fungsional, hanya perbaikan minor jika perlu) */
-/* Kode styling checkbox dari :has(input:checked) Anda sudah bagus dan modern, */
-/* jadi saya akan mempertahankannya dengan sedikit penyesuaian warna agar */
-/* cocok dengan palet baru. */
-
 .checklist-details .checklist-item input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -565,55 +560,12 @@ body {
     transform: translateY(-60%) rotate(45deg) scale(1);
 }
 
-/* Efek coretan yang sudah ada dipertahankan */
 .checklist-details .checklist-item:has(input:checked) label {
     position: relative;
     text-decoration: none;
     color: var(--text-secondary);
     transition: color 0.4s ease;
 }
-
-.checklist-details .checklist-item:has(input:checked) label::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    animation: drawLine 0.5s 0.1s ease-out forwards;
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
-.checklist-details .checklist-item:has(input:checked) label::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    animation: drawLine 0.6s 0.2s ease-out forwards;
-    transform: scaleX(0) rotate(-1deg);
-    transform-origin: left;
-    opacity: 0.7;
-}
-
-@keyframes drawLine {
-    from {
-        transform: scaleX(0);
-    }
-
-    to {
-        transform: scaleX(1);
-    }
-}
-
 
 /* ========================================================== */
 /* MODAL & FORM                                             */
@@ -725,8 +677,6 @@ body {
     box-shadow: 0 0 0 3px var(--accent-indigo-bg);
 }
 
-/* ... Kode lainnya (task-checkbox, founder-list, etc.) dipertahankan ... */
-/* Saya hanya akan menyesuaikan warna dan sedikit padding */
 .task-checkbox-group {
     display: flex;
     flex-wrap: wrap;
@@ -825,34 +775,15 @@ body {
     margin-top: 3rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
-.dashboard-footer nav {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.dashboard-footer a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.dashboard-footer a:hover {
-    color: var(--accent-indigo);
-}
 
 /* ========================================================== */
 /* PENYESUAIAN RESPONSIVE (MOBILE)                          */
 /* ========================================================== */
-/* Kode responsif yang ada sudah cukup baik, hanya perlu sedikit penyesuaian */
-
 @media (max-width: 992px) {
     .dashboard-container {
         padding: 1.5rem;
@@ -975,4 +906,59 @@ body {
     }
 
     /* Buat checklist jadi 1 kolom di mobile */
+}
+
+/* VERSI C: CORETAN DUA WARNA (TWO-TONE SCRIBBLE) */
+
+.checklist-details .checklist-item:has(input:checked) label {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.4s ease;
+}
+
+/* Lapisan pertama: warna hijau utama */
+.checklist-details .checklist-item:has(input:checked) label::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%2322C55E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    animation: drawLine 0.5s 0.1s ease-out forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+/* Lapisan kedua: warna biru dari palet tema */
+.checklist-details .checklist-item:has(input:checked) label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5.61C25.3323 13.9232 50.8953 -5.33211 58.5 4.11001C66.1047 13.5521 90.5 1.61 113.5 6.61C136.5 11.61 149 1 149 1' stroke='%233B82F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    /* Muncul sedikit lebih lambat dan bergeser */
+    animation: drawLine 0.6s 0.2s ease-out forwards;
+    transform: scaleX(0) rotate(-1deg);
+    /* Sedikit diputar */
+    transform-origin: left;
+    opacity: 0.7;
+}
+
+
+@keyframes drawLine {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
 }

@@ -7,7 +7,7 @@
     <title>Verifikasi Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'%3E%3Cpath fill-rule='evenodd' d='M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z' clip-rule='evenodd' /%3E%3C/svg%3E">
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath fill-rule='evenodd' d='M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z' clip-rule='evenodd' /%3E%3C/svg%3E">
     <script src="script.js" defer></script>
 </head>
 
@@ -22,11 +22,18 @@
                 </svg>
                 <div>
                     <h1>Dasbor Verifikasi</h1>
-                    <p>Monitor dan kelola semua proses verifikasi data Anda.</p>
+                    <p>Monitor dan kelola semua proses verifikasi data</p>
                 </div>
             </div>
             <div class="header-actions">
-                <button id="addNewBtn" class="btn btn-primary">+ Tambah Data Baru</button>
+                <button id="addNewBtn" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Tambah Data Baru</span>
+                </button>
             </div>
         </header>
 
@@ -39,7 +46,8 @@
 
                     <div class="filter-sort-wrapper">
                         <div class="filter-pills">
-                            <button class="pill active">Semua</button> <button class="pill">Perubahan</button>
+                            <button class="pill active">Semua</button>
+                            <button class="pill">Perubahan</button>
                             <button class="pill">Pendirian</button>
                         </div>
 
