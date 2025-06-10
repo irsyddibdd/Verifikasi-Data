@@ -1,3 +1,1126 @@
+/* ==========================================================
+   1. IMPOR FONT & PENGATURAN DASAR
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* -- Variabel Tema Terang (Light Mode) -- */
+    --bg-main: #f8f9fe;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #fcfcff;
+    --bg-subtle: #f3f4f6;
+    --border-color: #e5e7eb;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-tertiary: #9ca3af;
+    --accent-indigo: #4f46e5;
+    --accent-indigo-dark: #4338ca;
+    --accent-indigo-bg: #eef2ff;
+    --accent-red: #ef4444;
+    --accent-red-bg: #fee2e2;
+    --accent-red-dark: #b91c1c;
+    --accent-green: #10b981;
+    --accent-green-bg: #d1fae5;
+    --accent-amber: #f59e0b;
+    --accent-amber-bg: #fffbeb;
+    --shadow-color: rgba(0, 0, 0, 0.07);
+    --splash-bg: var(--bg-main);
+
+    /* -- Variabel Ukuran & Efek -- */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    --shadow-sm: 0 1px 3px 0 var(--shadow-color), 0 1px 2px -1px var(--shadow-color);
+    --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+    --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode {
+    /* -- Variabel Tema Gelap (Dark Mode) -- */
+    --bg-main: #111827;
+    --bg-surface: #1f2937;
+    --bg-surface-hover: #374151;
+    --bg-subtle: #374151;
+    --border-color: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --text-tertiary: #6b7280;
+    --accent-indigo: #6366f1;
+    --accent-indigo-dark: #4f46e5;
+    --accent-indigo-bg: #3730a3;
+    --accent-red: #f87171;
+    --accent-red-bg: #fee2e2;
+    --accent-red-dark: #ef4444;
+    --accent-green: #34d399;
+    --accent-green-bg: #059669;
+    --accent-amber: #fbbf24;
+    --accent-amber-bg: #fef3c7;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --splash-bg: #111827;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* Mencegah layout 'getar' saat scrollbar muncul/hilang */
+    overflow-y: scroll;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dashboard-container {
+    padding: 2rem 3rem;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* ==========================================================
+      2. ANIMASI PEMBUKA & INDIKATOR SINKRONISASI
+      ========================================================== */
+
+#startup-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--splash-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#startup-animation.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.animation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.checkmark-logo {
+    width: 100px;
+    height: 100px;
+}
+
+.checkmark-logo .circle {
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    animation: draw-circle 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.checkmark-logo .check {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: draw-check 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.8s forwards;
+}
+
+.animation-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+}
+
+.sync-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sync-indicator.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sync-indicator span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.sync-indicator .spinner {
+    animation: rotate 2s linear infinite;
+    width: 20px;
+    height: 20px;
+}
+
+.sync-indicator .spinner .path {
+    stroke: var(--accent-indigo);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+/* Keyframes untuk Animasi */
+@keyframes draw-circle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes draw-check {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fade-in-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes row-enter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================================
+      3. HEADER & TOMBOL AKSI
+      ========================================================== */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-logo {
+    width: 36px;
+    height: 36px;
+    color: var(--accent-indigo);
+}
+
+.header-title h1 {
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 1.2;
+    font-variant-ligatures: none;
+}
+
+.header-title p {
+    margin-top: 0.1rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-primary {
+    background-color: var(--accent-indigo);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-indigo-dark);
+}
+
+.btn-secondary {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    border-color: var(--text-tertiary);
+    background-color: var(--bg-surface-hover);
+}
+
+.btn-danger {
+    background-color: var(--accent-red);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--accent-red-dark);
+}
+
+body.dark-mode .btn-danger {
+    background-color: var(--accent-red-dark);
+}
+
+body.dark-mode .btn-danger:hover {
+    background-color: var(--accent-red);
+}
+
+/* ==========================================================
+      4. KOMPONEN UI (SWITCH, STATS, KARTU, TABEL)
+      ========================================================== */
+
+/* -- Theme Switch -- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23f59e0b"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>');
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+input:checked+.slider {
+    background-color: var(--accent-indigo);
+}
+
+input:checked+.slider:before {
+    transform: translateX(22px);
+    background-color: #1f2937;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23fbbf24"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.464A1 1 0 106.465 13.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 11a1 1 0 100-2H4a1 1 0 100 2h1z" clip-rule="evenodd"></path></svg>');
+}
+
+/* -- Kartu Statistik -- */
+.stats-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background-color: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-slow);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+#statSelesai {
+    color: var(--accent-green);
+}
+
+/* -- Kartu Data Utama -- */
+.data-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-slow);
+}
+
+.data-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.data-card.is-syncing {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.75;
+    background-color: var(--bg-surface-hover);
+}
+
+/* -- Kontrol di dalam Kartu Data (Cari, Filter, Urutkan) -- */
+.card-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-bar {
+    flex-grow: 1;
+    min-width: 250px;
+}
+
+.search-bar input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.85rem center;
+    transition: var(--transition-fast);
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--accent-indigo);
+    box-shadow: 0 0 0 3px var(--accent-indigo-bg);
+}
+
+.filter-sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-pills {
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--bg-main);
+    padding: 0.35rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.filter-pills .pill {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.filter-pills .pill:hover {
+    color: var(--text-primary);
+}
+
+.filter-pills .pill.active {
+    background-color: var(--bg-surface);
+    color: var(--accent-indigo);
+    box-shadow: var(--shadow-sm);
+}
+
+.sort-control {
+    position: relative;
+}
+
+.sort-control select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.sort-control::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0.85rem;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* ==========================================================
+      5. TABEL DATA & KONTENNYA
+      ========================================================== */
+
+.data-table {
+    padding: 0;
+}
+
+#loading,
+.table-row-nodata {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.table-header,
+.table-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1.2fr 100px;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.table-header {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.table-row {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-top: 1px solid var(--border-color);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+    animation: row-enter 0.5s ease forwards;
+}
+
+.table-row:hover {
+    background-color: var(--bg-surface-hover);
+    transform: scale(1.01);
+}
+
+.table-row.expanded {
+    background-color: var(--accent-indigo-bg);
+}
+
+body.dark-mode .table-row:hover {
+    background-color: var(--bg-surface-hover);
+}
+
+body.dark-mode .table-row.expanded {
+    background-color: var(--bg-surface-hover);
+    border-left: 3px solid var(--accent-indigo);
+}
+
+.table-row .col.project-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* -- Pills (Label Status/Tipe) -- */
+.pill-base {
+    padding: 0.3rem 0.85rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.type-pill.Perubahan {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+
+.type-pill.Pendirian,
+.type-pill.Lainnya {
+    background-color: var(--accent-amber-bg);
+    color: #b45309;
+}
+
+.status-pill.selesai {
+    background-color: var(--accent-green-bg);
+    color: #047857;
+}
+
+.status-pill.diproses {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-pill.belum {
+    background-color: #f3f4f6;
+    color: var(--text-secondary);
+}
+
+body.dark-mode .type-pill.Perubahan {
+    background-color: #3730a3;
+    color: #c7d2fe;
+}
+
+body.dark-mode .type-pill.Pendirian,
+body.dark-mode .type-pill.Lainnya {
+    background-color: #78350f;
+    color: #fde68a;
+}
+
+body.dark-mode .status-pill.selesai {
+    background-color: #064e3b;
+    color: #a7f3d0;
+}
+
+body.dark-mode .status-pill.diproses {
+    background-color: #1e40af;
+    color: #bfdbfe;
+}
+
+body.dark-mode .status-pill.belum {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+/* -- Tombol Aksi & Tooltip di Tabel -- */
+.action-buttons {
+    position: relative;
+    text-align: right;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.action-buttons .action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 99px;
+    line-height: 0;
+    transition: var(--transition-fast);
+}
+
+.action-buttons .action-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-tertiary);
+    stroke-width: 2.5;
+}
+
+.action-buttons .action-btn:hover {
+    background-color: var(--border-color);
+}
+
+.action-buttons .action-btn:hover svg {
+    stroke: var(--text-primary);
+}
+
+.action-buttons .action-btn.delete-btn:hover svg {
+    stroke: var(--accent-red);
+}
+
+.action-btn[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 10;
+}
+
+.action-btn[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* -- Detail Checklist (Konten yang dapat diperluas) -- */
+.checklist-details {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    background-color: var(--bg-main);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.table-row.expanded+.checklist-details {
+    max-height: 800px;
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.notes-section {
+    background-color: var(--accent-amber-bg);
+    border-left: 4px solid var(--accent-amber);
+    border-radius: var(--border-radius-sm);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #92400e;
+}
+
+.notes-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+body.dark-mode .notes-section {
+    background-color: #451a03;
+    border-color: #d97706;
+    color: #fef3c7;
+}
+
+.checklist-title {
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.checklist-details ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.checklist-item label {
+    color: var(--text-primary);
+    transition: color 0.4s ease;
+}
+
+.checklist-item:has(input:checked) label {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+/* -- Paginasi -- */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 0.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.pagination-controls .btn {
+    min-width: 90px;
+    justify-content: center;
+}
+
+.page-info {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0 1rem;
+}
+
+/* ==========================================================
+      6. MODAL & FORMULIR
+      ========================================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: var(--bg-surface);
+    padding: 2.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 550px;
+    width: 100%;
+    text-align: left;
+    transform: scale(0.95) translateY(10px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+}
+
+/* -- Elemen Formulir -- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.6rem;
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-indigo);
+    background-color: var(--bg-surface);
+    box-shadow: 0 0 0 3px var(--accent-indigo-bg);
+}
+
+.task-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.task-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--bg-main);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.task-checkbox:hover {
+    border-color: var(--accent-indigo);
+    background-color: var(--accent-indigo-bg);
+}
+
+.founder-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--accent-indigo-bg);
+    color: var(--accent-indigo-dark);
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+
+body.dark-mode .founder-list li {
+    color: var(--text-primary);
+}
+
+
+/* ==========================================================
+      7. FOOTER
+      ========================================================== */
+
+.dashboard-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* ==========================================================
+      8. RESPONSIVE DESIGN (MEDIA QUERIES)
+      ========================================================== */
+
+@media (max-width: 992px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 2.5fr 1fr 1fr 80px;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .header-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .header-title p {
+        font-size: 0.9rem;
+    }
+
+    .dashboard-header,
+    .card-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .search-bar input {
+        max-width: none;
+    }
+
+    .filter-sort-wrapper {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dashboard-footer {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .table-header {
+        display: none;
+    }
+
+    .table-row {
+        display: block;
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-md);
+        margin-bottom: 1rem;
+        padding: 1.25rem;
+        background-color: var(--bg-surface);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .table-row:hover {
+        transform: none;
+        background-color: var(--bg-surface-hover);
+    }
+
+    .table-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .table-row .col {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.85rem 0;
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    .table-row .col:last-child {
+        border-bottom: none;
+    }
+
+    .table-row .col::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-align: left;
+    }
+
+    .table-row .col.project-name {
+        display: block;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .table-row .col.project-name::before {
+        display: none;
+    }
+
+    .checklist-details ul,
+    .checklist-details {
+        grid-template-columns: 1fr;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
 /* Import Font Baru yang Lebih Modern */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -10,7 +1133,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-main); /* Sama dengan splash screen */
+    background-color: var(--bg-main);
+    /* Sama dengan splash screen */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,13 +1162,15 @@
 
 /* Mengatur path SVG untuk animasi 'menggambar' */
 .checkmark-logo .circle {
-    stroke-dasharray: 283; /* Keliling lingkaran (2 * pi * 45) */
+    stroke-dasharray: 283;
+    /* Keliling lingkaran (2 * pi * 45) */
     stroke-dashoffset: 283;
     animation: draw-circle 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 .checkmark-logo .check {
-    stroke-dasharray: 80; /* Panjang path centang */
+    stroke-dasharray: 80;
+    /* Panjang path centang */
     stroke-dashoffset: 80;
     /* Mulai setelah lingkaran selesai digambar */
     animation: draw-check 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.8s forwards;
@@ -55,8 +1181,10 @@
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--text-primary);
-    opacity: 0; /* Mulai dari transparan */
-    transform: translateY(20px); /* Mulai dari bawah */
+    opacity: 0;
+    /* Mulai dari transparan */
+    transform: translateY(20px);
+    /* Mulai dari bawah */
     /* Mulai setelah logo hampir selesai */
     animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
 }
