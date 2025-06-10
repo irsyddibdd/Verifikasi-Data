@@ -105,6 +105,16 @@ function filterAndRenderData() {
     // Simpan posisi scroll saat ini
     const scrollPosition = window.scrollY;
 
+    // ================== PERUBAHAN DIMULAI DI SINI ==================
+
+    // LANGKAH 1: Buat daftar untuk "mengingat" ID baris mana saja yang sedang terbuka (expanded)
+    const expandedRowIds = new Set();
+    document.querySelectorAll('.table-row.expanded').forEach(row => {
+        expandedRowIds.add(row.id);
+    });
+
+    // ================================================================
+
     let processedData = [...allData];
 
     if (currentFilter !== 'All') {
@@ -128,7 +138,24 @@ function filterAndRenderData() {
         }
     });
 
+    // LANGKAH 2: Render tabel seperti biasa. Ini akan menghapus baris lama dan membuat yang baru.
     renderTable(processedData);
+    
+    // ================== PERUBAHAN DILANJUTKAN DI SINI ==================
+    
+    // LANGKAH 3: Setelah tabel baru jadi, cari baris berdasarkan ID yang sudah kita simpan
+    // dan kembalikan kelas 'expanded' agar terbuka kembali.
+    if (expandedRowIds.size > 0) {
+        expandedRowIds.forEach(rowId => {
+            const rowElement = document.getElementById(rowId);
+            // Pastikan baris tersebut masih ada (tidak terhapus dari data)
+            if (rowElement) {
+                rowElement.classList.add('expanded');
+            }
+        });
+    }
+
+    // ====================================================================
     
     // Kembalikan posisi scroll
     window.scrollTo(0, scrollPosition);
