@@ -967,3 +967,72 @@ body {
         transform: scaleX(1);
     }
 }
+
+/* ===== KODE BARU UNTUK INDIKATOR SINKRONISASI START ===== */
+.sync-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: 1.5rem;
+    opacity: 0;
+    /* Sembunyikan secara default */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sync-indicator.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sync-indicator span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.sync-indicator .spinner {
+    animation: rotate 2s linear infinite;
+    width: 20px;
+    height: 20px;
+}
+
+.sync-indicator .spinner .path {
+    stroke: var(--accent-indigo);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+/* Kelas untuk efek transisi saat data di-update */
+.data-card.is-syncing {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.75;
+    background-color: #fcfcff;
+    /* Sedikit ganti warna latar untuk feedback tambahan */
+}
+
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+}
+
+/* ===== KODE BARU UNTUK INDIKATOR SINKRONISASI END ===== */

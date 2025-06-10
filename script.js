@@ -16,6 +16,8 @@ let isModalOpen = false; // Flag untuk melacak status modal
 // --- Referensi Elemen HTML ---
 const tableBody = document.getElementById('table-body');
 const loadingIndicator = document.getElementById('loading');
+const syncIndicator = document.getElementById('syncIndicator'); // <-- TAMBAHKAN INI
+const dataCard = document.querySelector('.data-card');       // <-- TAMBAHKAN INI
 
 // Modal Tambah Data
 const addNewBtn = document.getElementById('addNewBtn');
@@ -42,13 +44,15 @@ const sortSelect = document.getElementById('sort-select');
 // --- FUNGSI-FUNGSI UTAMA ---
 
 async function fetchData(isBackgroundUpdate = false) {
-    // Jangan lakukan update jika ada modal yang terbuka
     if (isModalOpen) {
         console.log("Pembaruan data ditunda karena modal terbuka.");
         return;
     }
 
-    if (!isBackgroundUpdate) {
+    // Tampilkan indikator halus HANYA untuk update latar belakang
+    if (isBackgroundUpdate) {
+        if (syncIndicator) syncIndicator.classList.add('visible');
+    } else {
         if (loadingIndicator) loadingIndicator.style.display = 'block';
         if (tableBody) tableBody.innerHTML = '';
     }
@@ -61,20 +65,38 @@ async function fetchData(isBackgroundUpdate = false) {
         // Cek apakah data benar-benar berubah sebelum me-render ulang
         if (JSON.stringify(allData) !== JSON.stringify(data)) {
             console.log("Data baru terdeteksi, memperbarui tampilan...");
-            allData = data;
-            filterAndRenderData();
+
+            // Terapkan efek redup sebelum mengubah DOM
+            if (dataCard) dataCard.classList.add('is-syncing');
+
+            // Beri sedikit jeda agar animasi CSS sempat berjalan
+            setTimeout(() => {
+                allData = data;
+                filterAndRenderData();
+
+                // Kembalikan tampilan normal setelah data dirender
+                if (dataCard) dataCard.classList.remove('is-syncing');
+            }, 400); // 400ms cocok dengan transisi opacity di CSS
+
         } else {
             console.log("Tidak ada perubahan data.");
         }
 
-        if (loadingIndicator && loadingIndicator.style.display === 'block') {
-            loadingIndicator.style.display = 'none';
-        }
     } catch (error) {
         if (loadingIndicator && !isBackgroundUpdate) {
             loadingIndicator.innerHTML = 'Gagal memuat data.';
         }
         console.error('Terjadi error saat fetchData:', error);
+    } finally {
+        // Sembunyikan indikator utama jika masih terlihat
+        if (loadingIndicator && loadingIndicator.style.display === 'block') {
+            loadingIndicator.style.display = 'none';
+        }
+        // Selalu sembunyikan indikator halus setelah selesai
+        if (isBackgroundUpdate && syncIndicator) {
+             // Beri jeda sedikit sebelum menghilangkannya agar tidak terasa terburu-buru
+            setTimeout(() => syncIndicator.classList.remove('visible'), 500);
+        }
     }
 }
 
